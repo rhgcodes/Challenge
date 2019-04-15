@@ -42,9 +42,10 @@ var app = express();
 
 var compiler = webpack(config);
 
-// Connect to the Mongo DB
+// Connect to the Mongo DB locally
 mongoose.connect("mongodb://localhost/userdb", { useNewUrlParser: true });
 
+// For mLab
 mongoose.connect(process.env.MONGODB);
 mongoose.connection.on('error', function() {
   console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
@@ -115,6 +116,7 @@ app.post('/login', userController.loginPost);
 app.post('/forgot', userController.forgotPost);
 app.post('/reset/:token', userController.resetPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
+//Added methods
 app.post('/students', studentController.createStudent);
 app.get('/students', studentController.allStudents);
 app.patch('/students/:id', studentController.updateStudent);
